@@ -7,7 +7,7 @@ LFLAGS := -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 all: lab1
 
 lab1: | target
-	gcc $(CFLAGS) 01_discharging_of_capacitor/main.c -I $(RAYLIB) -L $(RAYLIB) $(LFLAGS) -o target/$@
+	gcc $(CFLAGS) src/01_discharging_of_capacitor/main.c src/common/rk2.c  -L $(RAYLIB) $(LFLAGS) -o target/$@
 
 
 target:

@@ -1,0 +1,4 @@
+CompilerFlags:
+  Add:
+    - "-I"
+    - "./external/raylib-5.5/src"

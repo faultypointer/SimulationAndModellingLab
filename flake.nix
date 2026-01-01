@@ -19,6 +19,8 @@
     in
       pkgs.mkShell {
         packages = [
+          pkgs.clang-tools
+          
           pkgs.libGL
           pkgs.mesa
 
