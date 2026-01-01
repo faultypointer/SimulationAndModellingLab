@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "../include/sam.h"
 #include "../../external/raylib-5.5/src/raylib.h"
 #include <stdlib.h>
@@ -12,21 +11,21 @@
 #define GRAPH_HEIGHT 600
 
 // Rk2 stuff
-#define ITERATION 100
+#define ITERATION 50
 #define STEP 10
 #define R 10
 #define C 10
 #define Q_NOT 100
 
-int time_to_graphX(float t)
+float time_to_graphX(float t)
 {
-	return (int)((float)GRAPH_X +
-		     (float)GRAPH_WIDTH * t / (float)(STEP * ITERATION));
+	return ((float)GRAPH_X +
+		(float)GRAPH_WIDTH * t / (float)(STEP * ITERATION));
 }
 
-int charge_to_graphY(float q)
+float charge_to_graphY(float q)
 {
-	return (int)((float)GRAPH_Y + (float)GRAPH_HEIGHT * (1.f - q / Q_NOT));
+	return ((float)GRAPH_Y + (float)GRAPH_HEIGHT * (1.f - q / Q_NOT));
 }
 
 float discharge(float tn, float qn);
@@ -61,7 +60,9 @@ int main()
 			float x2 = time_to_graphX(tns[i]);
 			float y1 = charge_to_graphY(qns[i - 1]);
 			float y2 = charge_to_graphY(qns[i]);
-			DrawLine(x1, y1, x2, y2, BLACK);
+			Vector2 v1 = { x1, y1 };
+			Vector2 v2 = { x2, y2 };
+			DrawLineEx(v1, v2, 4.f, BLACK);
 			// DrawCircle(time_to_graphX(tns[i]),
 			// 	   charge_to_graphY(qns[i]), 2.f, RED);
 		}
