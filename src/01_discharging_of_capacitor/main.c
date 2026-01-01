@@ -19,13 +19,12 @@
 
 float time_to_graphX(float t)
 {
-	return ((float)GRAPH_X +
-		(float)GRAPH_WIDTH * t / (float)(STEP * ITERATION));
+	return GRAPH_X + GRAPH_WIDTH * t / (STEP * ITERATION);
 }
 
 float charge_to_graphY(float q)
 {
-	return ((float)GRAPH_Y + (float)GRAPH_HEIGHT * (1.f - q / Q_NOT));
+	return GRAPH_Y + GRAPH_HEIGHT * (1.f - q / Q_NOT);
 }
 
 float discharge(float tn, float qn);
