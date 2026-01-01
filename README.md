@@ -19,5 +19,5 @@ Finally build raylib
 
 ```bash
 cd external/raylib-5.5/src/
-make PLATFORM=PLATFORM_DESKTOP 
+make PLATFORM=PLATFORM_DESKTOP GLFW_LINUX_ENABLE_WAYLAND=TRUE
 ```
