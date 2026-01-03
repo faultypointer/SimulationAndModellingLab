@@ -36,7 +36,7 @@ float charge_to_graphY(float q)
 	return GRAPH_Y + GRAPH_HEIGHT * (1.f - q / Q_NOT);
 }
 
-float discharge(float tn, float qn);
+void discharge(float tn, const float *yn, float *out);
 
 void draw_measurements_table_outline()
 {
@@ -77,11 +77,12 @@ int main()
 	char text_buffer[11];
 	int iter = 1;
 	Rk2 *rk2 = (Rk2 *)malloc(sizeof(Rk2));
+	rk2->dimension = 1;
 	rk2_init_ralston(rk2, discharge, STEP);
 
 	while (!WindowShouldClose()) {
 		if (iter <= ITERATION) {
-			qn = rk2_apply_update(rk2, tn, qn);
+			rk2_apply_update(rk2, tn, &qn);
 			tn += STEP;
 			tns[iter] = tn;
 			qns[iter] = qn;
@@ -123,8 +124,8 @@ int main()
 	return 0;
 }
 
-float discharge(float tn, float qn)
+void discharge(float tn, const float *yn, float *out)
 {
 	(void)tn;
-	return -qn / (R * C);
+	out[0] = -yn[0] / (R * C);
 }

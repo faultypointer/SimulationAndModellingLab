@@ -22,10 +22,16 @@ Rk2 *rk2_init_ralston(Rk2 *rk2, rk2_update_func update, float step)
 	return rk2;
 }
 
-float rk2_apply_update(Rk2 *rk2, float tn, float yn)
+void rk2_apply_update(Rk2 *rk2, float tn, float *yn)
 {
-	float k1 = rk2->update(tn, yn);
-	float k2 = rk2->update(tn + rk2->step * rk2->alpha,
-			       yn + rk2->beta * rk2->step * k1);
-	return yn + rk2->step * (rk2->a * k1 + rk2->b * k2);
+	int n = rk2->dimension;
+	float k1[n], k2[n], y_tmp[n];
+	rk2->update(tn, yn, k1);
+	for (int i = 0; i < n; i++) {
+		y_tmp[i] = yn[i] + (rk2->beta * rk2->step * k1[i]);
+	}
+	rk2->update(tn + rk2->alpha * rk2->step, y_tmp, k2);
+	for (int i = 0; i < n; i++) {
+		yn[i] = yn[i] + rk2->step * (rk2->a * k1[i] + rk2->b * k2[i]);
+	}
 }
