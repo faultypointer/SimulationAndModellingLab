@@ -6,9 +6,22 @@ LFLAGS := -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
 all: lab1
 
-lab1: | target
-	gcc $(CFLAGS) src/01_discharging_of_capacitor/main.c src/common/rk2.c  -L $(RAYLIB) $(LFLAGS) -o target/$@
+lab1: rk2.o lab1.o | target
+	gcc $(CFLAGS) target/rk2.o target/lab1.o  -L $(RAYLIB) $(LFLAGS) -o target/$@
 
+lab1.o: | target
+	gcc $(CFLAGS) -c src/01_discharging_of_capacitor/main.c  -o target/$@
+
+
+lab2: rk2.o lab2.o | target
+	gcc $(CFLAGS) target/rk2.o target/lab2.o  -L $(RAYLIB) $(LFLAGS) -o target/$@
+
+lab2.o: | target
+	gcc $(CFLAGS) -c src/02_spring_mass_system/main.c  -o target/$@
+
+
+rk2.o: | target
+	gcc $(CLFAGS) -c src/common/rk2.c -o target/$@
 
 target:
 	mkdir -p target
